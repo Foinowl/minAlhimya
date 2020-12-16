@@ -1,0 +1,40 @@
+INFO:root:Connection open
+INFO:root:PRAGMA foreign_keys = "1";
+ PRAGMA auto_vacuum = 0;
+INFO:root:---------------------
+INFO:root:Create tables
+INFO:root:CREATE TABLE IF NOT EXISTS `items` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `caption` TEXT, `price` REAL NOT NULL, `category` INTEGER, `producer` INTEGER, FOREIGN KEY(`category`) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE, FOREIGN KEY(`producer`) REFERENCES producers(id) ON UPDATE CASCADE ON DELETE CASCADE); CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `caption` TEXT); CREATE TABLE IF NOT EXISTS `producers` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `caption` TEXT);
+INFO:root:PRAGMA foreign_keys = "0"
+INFO:root:('INSERT INTO `items`(title,caption,price,category,producer) VALUES(?,?,?,?,?)', ('iPhone 6', '', 30000.0, 1, 1))
+INFO:root:('INSERT INTO `items`(title,caption,price,category,producer) VALUES(?,?,?,?,?)', ('iPhone 7', '', 45000.0, 1, 1))
+INFO:root:('INSERT INTO `items`(title,caption,price,category,producer) VALUES(?,?,?,?,?)', ('iPhone 8', '', 60000.0, 1, 1))
+INFO:root:('INSERT INTO `items`(title,caption,price,category,producer) VALUES(?,?,?,?,?)', ('Samsung Galaxy', '', 45000.0, 2, 2))
+INFO:root:('INSERT INTO `categories`(title,caption) VALUES(?,?)', ('Apple', 'Apple mobile phones'))
+INFO:root:('INSERT INTO `categories`(title,caption) VALUES(?,?)', ('Samsung', 'Samsung mobile phones'))
+INFO:root:('INSERT INTO `producers`(title,caption) VALUES(?,?)', ('Apple', 'Apple California'))
+INFO:root:('INSERT INTO `producers`(title,caption) VALUES(?,?)', ('Samsung', 'Samsung Korea'))
+INFO:root:PRAGMA foreign_keys = "1"
+INFO:root:---------------------
+INFO:root:Basic query with foreign key join
+INFO:root:SELECT items.id,items.title,items.price,categories.title,producers.title FROM items 
+LEFT JOIN categories ON items.category = categories.id
+LEFT JOIN producers ON items.producer = producers.id;
+INFO:root:{"items": [{"items.id": 2, "items.title": "Nokia 3310", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 3, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 4, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}, {"items.id": 5, "items.title": "iPhone 6", "items.price": 30000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 6, "items.title": "iPhone 7", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 7, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 8, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}]}
+INFO:root:{'items': [OrderedDict([('items.id', 2), ('items.title', 'Nokia 3310'), ('items.price', 45000.0), ('categories.title', 'Apple'), ('producers.title', 'Apple')]), OrderedDict([('items.id', 3), ('items.title', 'iPhone 8'), ('items.price', 60000.0), ('categories.title', 'Apple'), ('producers.title', 'Apple')]), OrderedDict([('items.id', 4), ('items.title', 'Samsung Galaxy'), ('items.price', 45000.0), ('categories.title', 'Samsung'), ('producers.title', 'Samsung')]), OrderedDict([('items.id', 5), ('items.title', 'iPhone 6'), ('items.price', 30000.0), ('categories.title', 'Apple'), ('producers.title', 'Apple')]), OrderedDict([('items.id', 6), ('items.title', 'iPhone 7'), ('items.price', 45000.0), ('categories.title', 'Apple'), ('producers.title', 'Apple')]), OrderedDict([('items.id', 7), ('items.title', 'iPhone 8'), ('items.price', 60000.0), ('categories.title', 'Apple'), ('producers.title', 'Apple')]), OrderedDict([('items.id', 8), ('items.title', 'Samsung Galaxy'), ('items.price', 45000.0), ('categories.title', 'Samsung'), ('producers.title', 'Samsung')])]}
+INFO:root:---------------------
+INFO:root:Basic query for delete
+INFO:root:DELETE FROM items WHERE id = "1";
+INFO:root:SELECT items.id,items.title,items.price,categories.title,producers.title FROM items 
+LEFT JOIN categories ON items.category = categories.id
+LEFT JOIN producers ON items.producer = producers.id;
+INFO:root:{"items": [{"items.id": 2, "items.title": "Nokia 3310", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 3, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 4, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}, {"items.id": 5, "items.title": "iPhone 6", "items.price": 30000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 6, "items.title": "iPhone 7", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 7, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 8, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}]}
+INFO:root:---------------------
+INFO:root:Basic query for update
+INFO:root:UPDATE items SET title = "Nokia 3310" WHERE title = "iPhone 7";
+INFO:root:SELECT items.id,items.title,items.price,categories.title,producers.title FROM items 
+LEFT JOIN categories ON items.category = categories.id
+LEFT JOIN producers ON items.producer = producers.id;
+INFO:root:{"items": [{"items.id": 2, "items.title": "Nokia 3310", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 3, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 4, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}, {"items.id": 5, "items.title": "iPhone 6", "items.price": 30000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 6, "items.title": "Nokia 3310", "items.price": 45000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 7, "items.title": "iPhone 8", "items.price": 60000.0, "categories.title": "Apple", "producers.title": "Apple"}, {"items.id": 8, "items.title": "Samsung Galaxy", "items.price": 45000.0, "categories.title": "Samsung", "producers.title": "Samsung"}]}
+INFO:root:---------------------
+INFO:root:Tables deleting
+INFO:root:Connection close
